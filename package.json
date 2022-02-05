@@ -1,0 +1,22 @@
+{
+    "name": "auth",
+    "version": "1.0.0",
+    "description": "Package which sets up Auth0 authentication for our Laravel applications",
+    "scripts": {
+        "docs:dev": "vuepress dev docs",
+        "docs:build": "vuepress build docs"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/pango-studio/core.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/pango-studio/core/issues"
+    },
+    "homepage": "https://github.com/pango-studio/core#readme",
+    "devDependencies": {
+        "vuepress": "^1.9.7"
+    }
+}

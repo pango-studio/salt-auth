@@ -1,5 +1,7 @@
 <?php
 
-use VendorName\Skeleton\Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
-uses(TestCase::class)->in(__DIR__);
+use Salt\Auth\Tests\TestCase;
+
+uses(TestCase::class, RefreshDatabase::class)->in('');
