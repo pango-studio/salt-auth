@@ -2,9 +2,9 @@
 
 namespace Salt\Auth;
 
+use Salt\Auth\Commands\AuthCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Salt\Auth\Commands\AuthCommand;
 
 class AuthServiceProvider extends PackageServiceProvider
 {
