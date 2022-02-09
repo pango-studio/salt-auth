@@ -1,60 +1,59 @@
-# Package which sets up Auth0 authentication for our Laravel applications
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/salt/auth0.svg?style=flat-square)](https://packagist.org/packages/salt/auth0)
+[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/salt/auth/run-tests?label=tests)](https://github.com/pango-studio/salt-auth0/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/salt/auth/Check%20&%20fix%20styling?label=code%20style)](https://github.com/pango-studio/salt-auth0/auth/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amain)
+[![Total Downloads](https://img.shields.io/packagist/dt/salt/auth.svg?style=flat-square)](https://packagist.org/packages/salt/auth0)
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/salt/auth.svg?style=flat-square)](https://packagist.org/packages/salt/auth)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/salt/auth/run-tests?label=tests)](https://github.com/salt/auth/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/salt/auth/Check%20&%20fix%20styling?label=code%20style)](https://github.com/salt/auth/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/salt/auth.svg?style=flat-square)](https://packagist.org/packages/salt/auth)
-
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
-
-## Support us
-
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/auth.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/auth)
-
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
+This package adds some helper classes for integrating Laravel applications with Auth0
 
 ## Installation
 
 You can install the package via composer:
 
 ```bash
-composer require salt/auth
+composer require salt/auth0
 ```
 
 You can publish and run the migrations with:
 
 ```bash
-php artisan vendor:publish --tag="auth-migrations"
+php artisan vendor:publish --tag="auth0-migrations"
 php artisan migrate
 ```
 
 You can publish the config file with:
 
 ```bash
-php artisan vendor:publish --tag="auth-config"
+php artisan vendor:publish --tag="auth0-config"
 ```
 
 This is the contents of the published config file:
 
 ```php
 return [
+    'app' => array(
+        'client_id' => env('AUTH0_CLIENT_ID', ''),
+        'client_secret' => env('AUTH0_CLIENT_SECRET', ''),
+        'db_connection' => env('AUTH0_DB_CONNECTION', '')
+    ),
+    'api' => array(
+        'audience' => env('API_MACHINE_AUDIENCE', ''),
+        'client_id' => env('AUTH0_MACHINE_CLIENT_ID', ''),
+        'client_secret' => env('AUTH0_MACHINE_CLIENT_SECRET', ''),
+        'domain' => env('AUTH0_MACHINE_DOMAIN')
+    ),
+    'url' => env('APP_URL', '')
 ];
 ```
 
 Optionally, you can publish the views using
 
 ```bash
-php artisan vendor:publish --tag="auth-views"
+php artisan vendor:publish --tag="auth0-views"
 ```
 
-## Usage
+## Documentation
 
-```php
-$auth = new Salt\Auth();
-echo $auth->echoPhrase('Hello, Salt!');
-```
+[View the documentation for this package here](https://salt-auth0-package.netlify.app/)
 
 ## Testing
 
