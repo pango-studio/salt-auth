@@ -76,9 +76,5 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## Credits
 
-- [Salt](https://github.com/pango-studio)
-- [All Contributors](../../contributors)
-
-## License
-
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+-   [Salt](https://github.com/pango-studio)
+-   [All Contributors](../../contributors)
