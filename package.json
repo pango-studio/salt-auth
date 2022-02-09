@@ -1,5 +1,5 @@
 {
-    "name": "auth",
+    "name": "@salt/auth0",
     "version": "1.0.0",
     "description": "Package which sets up Auth0 authentication for our Laravel applications",
     "scripts": {

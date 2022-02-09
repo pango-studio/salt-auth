@@ -1,5 +1,5 @@
 {
-    "name": "salt/auth",
+    "name": "salt/auth0",
     "description": "Package which sets up Auth0 authentication for our Laravel applications",
     "keywords": [
         "salt",
