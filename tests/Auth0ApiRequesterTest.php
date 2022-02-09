@@ -9,14 +9,15 @@ use function Pest\Faker\faker;
 use function PHPUnit\Framework\assertEquals;
 use function PHPUnit\Framework\assertIsArray;
 use function PHPUnit\Framework\assertTrue;
-use Salt\Auth\Models\User;
-use Salt\Auth\Requesters\Auth0ApiRequester;
+
+use Salt\Auth0\Models\User;
+use Salt\Auth0\Requesters\Auth0ApiRequester;
 
 it('can fetch user details ', function () {
-    $user = User::factory('App\User')->create(['sub' => faker()->word]);
+    $user = User::factory()->create(['sub' => faker()->word]);
 
     Http::fake([
-        config("core.auth0.api.audience") . "users/" . $user->sub
+        config("salt-auth0.api.audience") . "users/" . $user->sub
         => Http::response(
             [
                 'user_id' => $user->sub,
@@ -32,11 +33,11 @@ it('can fetch user details ', function () {
 });
 
 it('can get user details via an access token', function () {
-    $user = User::factory('App\User')->create(['sub' => faker()->word]);
+    $user = User::factory()->create(['sub' => faker()->word]);
     $access_token = faker()->word;
 
     Http::fake([
-        "https://" . config("core.auth0.api.domain") . "/userinfo"
+        "https://" . config("salt-auth0.api.domain") . "/userinfo"
         => Http::response(
             [
                 'user_id' => $user->sub,
@@ -52,10 +53,10 @@ it('can get user details via an access token', function () {
 });
 
 it('can fetch user details from Auth0 with a given email', function () {
-    $user = User::factory('App\User')->create();
+    $user = User::factory()->create();
 
     Http::fake([
-        config("core.auth0.api.audience") . "users-by-email?email=" . $user->email
+        config("salt-auth0.api.audience") . "users-by-email?email=" . $user->email
         => Http::response(
             [
                 [
@@ -73,10 +74,10 @@ it('can fetch user details from Auth0 with a given email', function () {
 });
 
 it('can search for user details from Auth0 with a given email', function () {
-    $user = User::factory('App\User')->create();
+    $user = User::factory()->create();
 
     Http::fake([
-        config("core.auth0.api.audience") . 'users*'
+        config("salt-auth0.api.audience") . 'users*'
         => Http::response(
             [
                 [
@@ -96,10 +97,10 @@ it('can search for user details from Auth0 with a given email', function () {
 
 it('can create a new Auth0 user', function () {
     Queue::fake();
-    $user = User::factory('App\User')->create(['sub' => faker()->word]);
+    $user = User::factory()->create(['sub' => faker()->word]);
 
     Http::fake([
-        config("core.auth0.api.audience") . 'users'
+        config("salt-auth0.api.audience") . 'users'
         => Http::response(
             [
                 'user_id' => $user->sub,
@@ -125,10 +126,10 @@ it('can create a new Auth0 user', function () {
 });
 
 it('can update the details for a user on Auth0', function () {
-    $user = User::factory('App\User')->create(['sub' => faker()->word]);
+    $user = User::factory()->create(['sub' => faker()->word]);
 
     Http::fake([
-        config("core.auth0.api.audience") . "users/" . $user->sub
+        config("salt-auth0.api.audience") . "users/" . $user->sub
         => Http::response(
             [
                 'user_id' => $user->sub,
@@ -144,13 +145,13 @@ it('can update the details for a user on Auth0', function () {
 });
 
 it("can send a request to change the user's password", function () {
-    $user = User::factory('App\User')->create(
+    $user = User::factory()->create(
         [
             'sub' => faker()->word,
         ]
     );
     Http::fake([
-        config("core.auth0.api.audience") . "users/" . $user->sub
+        config("salt-auth0.api.audience") . "users/" . $user->sub
         => Http::response(true, 200),
     ]);
 
@@ -159,7 +160,7 @@ it("can send a request to change the user's password", function () {
 });
 
 it('can generate a password reset link for the user', function () {
-    $user = User::factory('App\User')->create(
+    $user = User::factory()->create(
         [
             'sub' => faker()->word,
         ]
@@ -168,7 +169,7 @@ it('can generate a password reset link for the user', function () {
     $ticket = faker()->word;
 
     Http::fake([
-        config("core.auth0.api.audience") . "tickets/password-change"
+        config("salt-auth0.api.audience") . "tickets/password-change"
         => Http::response(
             $ticket,
             200
@@ -181,10 +182,10 @@ it('can generate a password reset link for the user', function () {
 });
 
 it('can delete an Auth0 user', function () {
-    $user = User::factory('App\User')->create(['sub' => faker()->word]);
+    $user = User::factory()->create(['sub' => faker()->word]);
 
     Http::fake([
-        config("core.auth0.api.audience") . "users/" . $user->sub
+        config("salt-auth0.api.audience") . "users/" . $user->sub
         => Http::response(
             [
                 'statusCode' => 204,
@@ -199,7 +200,7 @@ it('can delete an Auth0 user', function () {
 });
 
 it('can get the roles for an Auth0 user', function () {
-    $user = User::factory('App\User')->create(['sub' => faker()->word]);
+    $user = User::factory()->create(['sub' => faker()->word]);
     $roles = [
         [
             'id' => faker()->word,
@@ -214,7 +215,7 @@ it('can get the roles for an Auth0 user', function () {
     ];
 
     Http::fake([
-        config("core.auth0.api.audience") . "users/" . $user->sub . "/roles"
+        config("salt-auth0.api.audience") . "users/" . $user->sub . "/roles"
         => Http::response(
             $roles,
             200
@@ -226,7 +227,7 @@ it('can get the roles for an Auth0 user', function () {
 });
 
 it('can fetch login logs', function () {
-    $user = User::factory('App\User')->create(['sub' => faker()->word]);
+    $user = User::factory()->create(['sub' => faker()->word]);
     $start = Carbon::now()->subdays(7);
     $end = Carbon::now();
 
@@ -256,7 +257,7 @@ it('can fetch login logs', function () {
 
     // Fake full log query
     Http::fake([
-        config("core.auth0.api.audience") . "logs?q=*"
+        config("salt-auth0.api.audience") . "logs?q=*"
         => Http::response(
             $full_logs,
             200
@@ -265,7 +266,7 @@ it('can fetch login logs', function () {
 
     // Fake user-specific log query
     Http::fake([
-        config("core.auth0.api.audience") . "users/{$user->sub}/logs?q=*"
+        config("salt-auth0.api.audience") . "users/{$user->sub}/logs?q=*"
         => Http::response(
             $user_logs,
             200
@@ -282,10 +283,10 @@ it('can fetch login logs', function () {
 });
 
 it('can start a passwordless email login flow', function () {
-    $user = User::factory('App\User')->create(['sub' => faker()->word]);
+    $user = User::factory()->create(['sub' => faker()->word]);
 
     Http::fake([
-        "https://" . config("core.auth0.api.domain") . "/passwordless/start"
+        "https://" . config("salt-auth0.api.domain") . "/passwordless/start"
         => Http::response([
             'id' => $user->sub,
             'email' => $user->email,
@@ -299,11 +300,11 @@ it('can start a passwordless email login flow', function () {
 });
 
 it('can verify a passwordless email code', function () {
-    $user = User::factory('App\User')->create(['sub' => faker()->word]);
+    $user = User::factory()->create(['sub' => faker()->word]);
     $access_token = faker()->word;
 
     Http::fake([
-        "https://" . config("core.auth0.api.domain") . "/oauth/token"
+        "https://" . config("salt-auth0.api.domain") . "/oauth/token"
         => Http::response(
             [
                 'id_token' => faker()->word,
@@ -323,7 +324,7 @@ it('can verify an authorization code', function () {
     $access_token = faker()->word;
 
     Http::fake([
-        "https://" . config("core.auth0.api.domain") . "/oauth/token"
+        "https://" . config("salt-auth0.api.domain") . "/oauth/token"
         => Http::response(
             [
                 'id_token' => faker()->word,
@@ -339,13 +340,13 @@ it('can verify an authorization code', function () {
 });
 
 it('can link two accounts together', function () {
-    $primary = User::factory('App\User')->create(['sub' => "auth0|" . faker()->word]);
-    $secondary = User::factory('App\User')->create(['sub' => "auth0|" . faker()->word]);
+    $primary = User::factory()->create(['sub' => "auth0|" . faker()->word]);
+    $secondary = User::factory()->create(['sub' => "auth0|" . faker()->word]);
 
     $access_token = faker()->word;
 
     Http::fake([
-        "https://" . config("core.auth0.api.domain") . "/api/v2/users/*"
+        "https://" . config("salt-auth0.api.domain") . "/api/v2/users/*"
         => Http::response(
             [
                 'id_token' => faker()->word,

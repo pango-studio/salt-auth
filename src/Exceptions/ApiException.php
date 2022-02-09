@@ -1,6 +1,6 @@
 <?php
 
-namespace Salt\Auth\Exceptions;
+namespace Salt\Auth0\Exceptions;
 
 use Exception;
 

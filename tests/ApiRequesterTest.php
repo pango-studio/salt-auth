@@ -2,9 +2,9 @@
 
 use function PHPUnit\Framework\assertIsString;
 
-use Salt\Auth\Exceptions\ApiException;
+use Salt\Auth0\Exceptions\ApiException;
 
-use Salt\Auth\Requesters\ApiRequester;
+use Salt\Auth0\Requesters\ApiRequester;
 
 it('can make an API call', function () {
     $method = "GET";

@@ -3,7 +3,7 @@
 use function Pest\Faker\faker;
 use function PHPUnit\Framework\assertEquals;
 
-use Salt\Auth\Models\User;
+use Salt\Auth0\Models\User;
 
 it('has a name', function () {
     $name = faker()->name;

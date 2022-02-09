@@ -2,6 +2,6 @@
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-use Salt\Auth\Tests\TestCase;
+use Salt\Auth0\Tests\TestCase;
 
 uses(TestCase::class, RefreshDatabase::class)->in('');

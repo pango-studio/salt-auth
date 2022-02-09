@@ -14,4 +14,5 @@ return [
             'domain' => env('AUTH0_MACHINE_DOMAIN')
         ),
     ),
+    'url' => env('APP_URL', '')
 ];

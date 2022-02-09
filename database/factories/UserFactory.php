@@ -1,10 +1,10 @@
 <?php
 
-namespace Salt\Auth\Database\Factories;
+namespace Salt\Auth0\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use Salt\Auth\Models\User;
+use Salt\Auth0\Models\User;
 
 class UserFactory extends Factory
 {

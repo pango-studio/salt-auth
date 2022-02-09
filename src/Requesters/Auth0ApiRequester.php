@@ -1,11 +1,11 @@
 <?php
 
-namespace Salt\Auth\Requesters;
+namespace Salt\Auth0\Requesters;
 
 use Carbon\Carbon;
 
 use Illuminate\Support\Facades\Http;
-use Salt\Auth\Exceptions\ApiException;
+use Salt\Auth0\Exceptions\ApiException;
 
 class Auth0ApiRequester extends ApiRequester implements RequesterInterface
 {
@@ -27,7 +27,7 @@ class Auth0ApiRequester extends ApiRequester implements RequesterInterface
     {
         $method = "GET";
 
-        $url = config("core.auth0.api.audience") . "users/" . $user_id;
+        $url = config("salt-auth0.api.audience") . "users/" . $user_id;
 
         $response = $this->makeApiRequest($method, $url);
         $user = json_decode($response);
@@ -46,7 +46,7 @@ class Auth0ApiRequester extends ApiRequester implements RequesterInterface
      */
     public function getUserInfo(String $access_token): Object
     {
-        $url = 'https://' . config("core.auth0.api.domain") . "/userinfo";
+        $url = 'https://' . config("salt-auth0.api.domain") . "/userinfo";
         $response = Http::withToken($access_token)->get($url);
 
         if ($response->failed()) {
@@ -70,7 +70,7 @@ class Auth0ApiRequester extends ApiRequester implements RequesterInterface
     public function fetchAuth0UserByEmail(String $email): array
     {
         $method = "GET";
-        $url = config("core.auth0.api.audience") . "users-by-email?email=" . $email;
+        $url = config("salt-auth0.api.audience") . "users-by-email?email=" . $email;
 
         $response = $this->makeApiRequest($method, $url);
 
@@ -91,11 +91,11 @@ class Auth0ApiRequester extends ApiRequester implements RequesterInterface
     public function searchAuth0UserByEmail(String $email): array
     {
         $method = "GET";
-        $url = config("core.auth0.api.audience")
+        $url = config("salt-auth0.api.audience")
             . 'users?search_engine=v3&q=(email:"'
             . $email
             . '" AND identities.connection:"'
-            . config('core.auth0.app.db_connection') . '")';
+            . config('salt-auth0.app.db_connection') . '")';
 
         $response = $this->makeApiRequest($method, $url);
 
@@ -117,10 +117,10 @@ class Auth0ApiRequester extends ApiRequester implements RequesterInterface
     public function createAuth0User(String $email, String $name, ?String $password = null): Object
     {
         $method = "POST";
-        $url = config("core.auth0.api.audience") . "users";
+        $url = config("salt-auth0.api.audience") . "users";
 
         // If a password was not passed to this method, generate a dummy one
-        if (! $password) {
+        if (!$password) {
             /**
              * It doesn't really matter what this password is, as it won't be used to login.
              * It should however be hashed so that someone isn't able to login as the user
@@ -129,7 +129,7 @@ class Auth0ApiRequester extends ApiRequester implements RequesterInterface
             $password = password_hash("TestPassword123", PASSWORD_DEFAULT);
         }
 
-        $connection = config('core.auth0.app.db_connection');
+        $connection = config('salt-auth0.app.db_connection');
 
         $body = [
             'email' => $email,
@@ -159,7 +159,7 @@ class Auth0ApiRequester extends ApiRequester implements RequesterInterface
     public function updateAuth0User(String $user_id, String $email, String $name): Object
     {
         $method = "PATCH";
-        $url = config("core.auth0.api.audience") . "users/" . $user_id;
+        $url = config("salt-auth0.api.audience") . "users/" . $user_id;
         $body = [
             'email' => $email,
             'name' => $name,
@@ -185,7 +185,7 @@ class Auth0ApiRequester extends ApiRequester implements RequesterInterface
     public function updateAuth0UserMeta(String $user_id, $meta)
     {
         $method = "PATCH";
-        $url = config("core.auth0.api.audience") . "users/" . $user_id;
+        $url = config("salt-auth0.api.audience") . "users/" . $user_id;
 
         $body = [
             'user_metadata' => $meta,
@@ -209,7 +209,7 @@ class Auth0ApiRequester extends ApiRequester implements RequesterInterface
     public function changePassword(String $user_id, String $password): bool
     {
         $method = "PATCH";
-        $url = config("core.auth0.api.audience") . "users/" . $user_id;
+        $url = config("salt-auth0.api.audience") . "users/" . $user_id;
 
         $body = [
             'password' => $password,
@@ -232,11 +232,11 @@ class Auth0ApiRequester extends ApiRequester implements RequesterInterface
     public function generatePasswordResetLink(String $user_id): String
     {
         $method = "POST";
-        $url = config("core.auth0.api.audience") . "tickets/password-change";
+        $url = config("salt-auth0.api.audience") . "tickets/password-change";
 
         $body = [
             'user_id' => $user_id,
-            'result_url' => config('core.url'),
+            'result_url' => config('salt-auth0.url'),
             'ttl_sec' => 2592000,
         ];
 
@@ -256,7 +256,7 @@ class Auth0ApiRequester extends ApiRequester implements RequesterInterface
     public function deleteAuth0User(String $user_id): Object
     {
         $method = "DELETE";
-        $url = config("core.auth0.api.audience") . "users/" . $user_id;
+        $url = config("salt-auth0.api.audience") . "users/" . $user_id;
 
         $response = $this->makeApiRequest($method, $url);
 
@@ -274,7 +274,7 @@ class Auth0ApiRequester extends ApiRequester implements RequesterInterface
     public function getRolesAuth0User($user_id): array
     {
         $method = "GET";
-        $url = config("core.auth0.api.audience") . "users/" . $user_id . "/roles";
+        $url = config("salt-auth0.api.audience") . "users/" . $user_id . "/roles";
 
         $response = $this->makeApiRequest($method, $url);
 
@@ -299,16 +299,16 @@ class Auth0ApiRequester extends ApiRequester implements RequesterInterface
         $date_query = "date:[{$date_from} TO {$date_to}]";
 
         // Setup connection query
-        $connection = config('core.auth0.app.db_connection');
+        $connection = config('salt-auth0.app.db_connection');
         $connection_query = " AND (connection:" . "$connection)";
 
         $type = " AND (type:s OR type:fu OR type:fp)";
 
         // If a user auth0 ID (sub) was passed, fetch logs just for that user. Otherwise fetch all logs
         if ($user_id) {
-            $url = config("core.auth0.api.audience") . "users/{$user_id}/logs?q={$date_query}{$connection_query}{$type}";
+            $url = config("salt-auth0.api.audience") . "users/{$user_id}/logs?q={$date_query}{$connection_query}{$type}";
         } else {
-            $url = config("core.auth0.api.audience") . "logs?q={$date_query}{$connection_query}{$type}";
+            $url = config("salt-auth0.api.audience") . "logs?q={$date_query}{$connection_query}{$type}";
         }
 
         $method = "GET";
@@ -332,14 +332,14 @@ class Auth0ApiRequester extends ApiRequester implements RequesterInterface
     public function getTokenViaResourceOwnerPassword(string $username, string $password): Object
     {
         $method = "POST";
-        $url = 'https://' . config("core.auth0.api.domain") . "/oauth/token";
+        $url = 'https://' . config("salt-auth0.api.domain") . "/oauth/token";
         $body = [
             'grant_type' => 'password',
             'username' => $username,
             'password' => $password,
-            'audience' => config("core.auth0.api.audience"),
-            'client_id' => config('core.auth0.app.client_id'),
-            'client_secret' => config('core.auth0.app.client_secret'),
+            'audience' => config("salt-auth0.api.audience"),
+            'client_id' => config('salt-auth0.app.client_id'),
+            'client_secret' => config('salt-auth0.app.client_secret'),
             'scope' => 'openid profile email offline_access',
         ];
         $response = $this->makeApiRequest($method, $url, $body);
@@ -359,13 +359,13 @@ class Auth0ApiRequester extends ApiRequester implements RequesterInterface
     public function startPasswordlessEmailFlow(string $email): Object
     {
         $method = "POST";
-        $url = 'https://' . config("core.auth0.api.domain") . "/passwordless/start";
+        $url = 'https://' . config("salt-auth0.api.domain") . "/passwordless/start";
         $body = [
             'connection' => 'email',
             'email' => $email,
             'send' => 'code',
-            'client_id' => config('core.auth0.app.client_id'),
-            'client_secret' => config('core.auth0.app.client_secret'),
+            'client_id' => config('salt-auth0.app.client_id'),
+            'client_secret' => config('salt-auth0.app.client_secret'),
         ];
         $response = $this->makeApiRequest($method, $url, $body);
         $authorize_data = json_decode($response);
@@ -385,15 +385,15 @@ class Auth0ApiRequester extends ApiRequester implements RequesterInterface
     public function verifyPasswordlessEmailCode(string $email, string $code): Object
     {
         $method = "POST";
-        $url = 'https://' . config("core.auth0.api.domain") . "/oauth/token";
+        $url = 'https://' . config("salt-auth0.api.domain") . "/oauth/token";
         $body = [
             "grant_type" => "http://auth0.com/oauth/grant-type/passwordless/otp",
             'username' => $email,
             'otp' => $code,
             'realm' => 'email',
-            'audience' => config("core.auth0.api.audience"),
-            'client_id' => config('core.auth0.app.client_id'),
-            'client_secret' => config('core.auth0.app.client_secret'),
+            'audience' => config("salt-auth0.api.audience"),
+            'client_id' => config('salt-auth0.app.client_id'),
+            'client_secret' => config('salt-auth0.app.client_secret'),
             'scope' => 'openid profile email offline_access',
         ];
 
@@ -415,11 +415,11 @@ class Auth0ApiRequester extends ApiRequester implements RequesterInterface
     public function verifyAuthorizationCode($code, $redirect_uri = null)
     {
         $method = "POST";
-        $url = 'https://' . config("core.auth0.api.domain") . "/oauth/token";
+        $url = 'https://' . config("salt-auth0.api.domain") . "/oauth/token";
         $body = [
             "grant_type" => "authorization_code",
-            'client_id' => config('core.auth0.app.client_id'),
-            'client_secret' => config('core.auth0.app.client_secret'),
+            'client_id' => config('salt-auth0.app.client_id'),
+            'client_secret' => config('salt-auth0.app.client_secret'),
             'code' => $code,
             'redirect_uri' => $redirect_uri,
         ];
@@ -444,7 +444,7 @@ class Auth0ApiRequester extends ApiRequester implements RequesterInterface
         list($secondary_provider, $secondary_id) = explode('|', $secondary_sub);
 
         $method = "POST";
-        $url = 'https://' . config("core.auth0.api.domain") . "/api/v2/users/" . $primary_sub . "/identities";
+        $url = 'https://' . config("salt-auth0.api.domain") . "/api/v2/users/" . $primary_sub . "/identities";
 
         $body = [
             "provider" => $secondary_provider,

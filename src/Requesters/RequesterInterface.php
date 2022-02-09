@@ -1,6 +1,6 @@
 <?php
 
-namespace Salt\Auth\Requesters;
+namespace Salt\Auth0\Requesters;
 
 use Illuminate\Http\Client\Response;
 

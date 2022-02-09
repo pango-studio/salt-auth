@@ -1,9 +1,9 @@
 <?php
 
-namespace Salt\Auth\Requesters;
+namespace Salt\Auth0\Requesters;
 
 use Illuminate\Support\Facades\Http;
-use Salt\Auth\Exceptions\ApiException;
+use Salt\Auth0\Exceptions\ApiException;
 
 class ApiRequester implements RequesterInterface
 {
@@ -36,7 +36,7 @@ class ApiRequester implements RequesterInterface
     {
         $curl = curl_init();
         curl_setopt_array($curl, [
-            CURLOPT_URL => "https://" . config('core.auth0.api.domain') . "/oauth/token",
+            CURLOPT_URL => "https://" . config('salt-auth0.api.domain') . "/oauth/token",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
@@ -44,11 +44,11 @@ class ApiRequester implements RequesterInterface
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "POST",
             CURLOPT_POSTFIELDS => "grant_type=client_credentials&client_id="
-                . config('core.auth0.api.client_id')
+                . config('salt-auth0.api.client_id')
                 . "&client_secret="
-                . config('core.auth0.api.client_secret')
+                . config('salt-auth0.api.client_secret')
                 . "&audience="
-                . config('core.auth0.api.audience'),
+                . config('salt-auth0.api.audience'),
             CURLOPT_HTTPHEADER => [
                 "content-type: application/x-www-form-urlencoded",
             ],

@@ -1,6 +1,6 @@
 <?php
 
-namespace Salt\Auth\Repositories;
+namespace Salt\Auth0\Repositories;
 
 use Auth0\Login\Auth0JWTUser;
 use Auth0\Login\Auth0User;
@@ -8,8 +8,8 @@ use Auth0\Login\Repository\Auth0UserRepository;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 
-use Salt\Auth\Models\User;
-use Salt\Auth\Requesters\Auth0ApiRequester;
+use Salt\Auth0\Models\User;
+use Salt\Auth0\Requesters\Auth0ApiRequester;
 
 class CustomUserRepository extends Auth0UserRepository
 {

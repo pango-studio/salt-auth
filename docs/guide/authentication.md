@@ -27,6 +27,7 @@ You will need values for the following variables in your `.env` file:
 ```env
 AUTH0_CLIENT_ID
 AUTH0_CLIENT_SECRET
+AUTH0_DOMAIN
 AUTH0_DB_CONNECTION
 
 API_MACHINE_AUDIENCE

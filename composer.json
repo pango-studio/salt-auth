@@ -4,7 +4,7 @@
     "keywords": [
         "salt",
         "laravel",
-        "auth"
+        "auth0"
     ],
     "homepage": "https://github.com/salt/auth",
     "license": "MIT",
@@ -38,13 +38,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Salt\\Auth\\": "src",
-            "Salt\\Auth\\Database\\Factories\\": "database/factories"
+            "Salt\\Auth0\\": "src",
+            "Salt\\Auth0\\Database\\Factories\\": "database/factories"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Salt\\Auth\\Tests\\": "tests"
+            "Salt\\Auth0\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -62,11 +62,8 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Salt\\Auth\\AuthServiceProvider"
-            ],
-            "aliases": {
-                "Auth": "Salt\\Auth\\Facades\\Auth"
-            }
+                "Salt\\Auth0\\SaltAuth0ServiceProvider"
+            ]
         }
     },
     "minimum-stability": "dev",

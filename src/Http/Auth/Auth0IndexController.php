@@ -1,12 +1,12 @@
 <?php
 
-namespace Salt\Auth\Http\Controllers\Auth;
+namespace Salt\Auth0\Http\Controllers\Auth;
 
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
-use Salt\Auth\Http\Controllers\Controller;
+use Salt\Auth0\Http\Controllers\Controller;
 
 class Auth0IndexController extends Controller
 {
@@ -30,9 +30,9 @@ class Auth0IndexController extends Controller
 
         $logoutUrl = sprintf(
             'https://%s/v2/logout?client_id=%s&returnTo=%s',
-            config('core.auth0.api.domain'),
-            config('core.auth0.app.client_id'),
-            config('core.url')
+            config('salt-auth0.api.domain'),
+            config('salt-auth0.app.client_id'),
+            config('salt-auth0.url')
         );
 
         return Redirect::intended($logoutUrl);

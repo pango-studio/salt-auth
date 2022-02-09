@@ -1,6 +1,6 @@
 <?php
 
-namespace Salt\Auth\Http\Controllers;
+namespace Salt\Auth0\Http\Controllers;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;

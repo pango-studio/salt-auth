@@ -1,12 +1,11 @@
 <?php
 
-namespace Salt\Auth;
+namespace Salt\Auth0;
 
-use Salt\Auth\Commands\AuthCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-class AuthServiceProvider extends PackageServiceProvider
+class SaltAuth0ServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {
@@ -16,10 +15,9 @@ class AuthServiceProvider extends PackageServiceProvider
          * More info: https://github.com/spatie/laravel-package-tools
          */
         $package
-            ->name('auth')
-            ->hasConfigFile()
+            ->name('auth0')
+            ->hasConfigFile("salt-auth0")
             ->hasViews()
-            ->hasMigration('create_users_table')
-            ->hasCommand(AuthCommand::class);
+            ->hasMigration('create_users_table');
     }
 }
