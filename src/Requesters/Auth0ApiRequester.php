@@ -120,7 +120,7 @@ class Auth0ApiRequester extends ApiRequester implements RequesterInterface
         $url = config("salt-auth0.api.audience") . "users";
 
         // If a password was not passed to this method, generate a dummy one
-        if (!$password) {
+        if (! $password) {
             /**
              * It doesn't really matter what this password is, as it won't be used to login.
              * It should however be hashed so that someone isn't able to login as the user
