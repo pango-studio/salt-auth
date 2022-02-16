@@ -6,8 +6,6 @@ use Auth0\Login\Auth0JWTUser;
 use Auth0\Login\Auth0User;
 use Auth0\Login\Repository\Auth0UserRepository;
 
-use Illuminate\Contracts\Auth\Authenticatable;
-
 use Salt\Auth0\Models\User;
 use Salt\Auth0\Requesters\Auth0ApiRequester;
 
@@ -82,7 +80,7 @@ class CustomUserRepository extends Auth0UserRepository
      *
      * @return Auth0JWTUser
      */
-    public function getUserByDecodedJWT(array $decodedJwt): Authenticatable
+    public function getUserByDecodedJWT(array $decodedJwt): Auth0JWTUser
     {
         $user = $this->upsertUser((array) $decodedJwt);
 
@@ -110,7 +108,7 @@ class CustomUserRepository extends Auth0UserRepository
      *
      * @return Auth0User
      */
-    public function getUserByUserInfo(array $userinfo): Authenticatable
+    public function getUserByUserInfo(array $userinfo): Auth0User
     {
         $user = $this->upsertUser($userinfo['profile']);
 
