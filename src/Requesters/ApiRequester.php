@@ -2,8 +2,11 @@
 
 namespace Salt\Auth0\Requesters;
 
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Salt\Auth0\Exceptions\ApiException;
+use Salt\Auth0\Models\AccessToken;
 
 class ApiRequester implements RequesterInterface
 {
@@ -33,6 +36,19 @@ class ApiRequester implements RequesterInterface
     }
 
     public function getAccessToken(): ?string
+    {
+        $accessToken = AccessToken::where('name', 'auth0')->first();
+
+        if (!$accessToken) {
+            $accessToken = $this->refreshAccessToken();
+        } else if ($accessToken->refreshed_at <= Carbon::now()->subDay()) {
+            $accessToken = $this->refreshAccessToken($accessToken);
+        }
+
+        return $accessToken->token;
+    }
+
+    public function refreshAccessToken(AccessToken $token = null): ?string
     {
         $curl = curl_init();
         curl_setopt_array($curl, [
@@ -65,21 +81,29 @@ class ApiRequester implements RequesterInterface
 
         $response = json_decode($response);
 
-        return isset($response->access_token) ? $response->access_token : null;
+        if (!$token) {
+            $token = AccessToken::create([
+                'name' => 'auth0',
+                'token' => $response->access_token,
+                'refreshed_at' => now()
+            ]);
+        }
+
+        return $token;
     }
 
     public function getErrorMessage(\Illuminate\Http\Client\Response $response): string
     {
         return         [
-            400 => __('notifications.api.400'),
-            401 => __('notifications.api.401'),
-            403 => __('notifications.api.403'),
-            404 => __('notifications.api.404'),
-            405 => __('notifications.api.405'),
-            429 => __('notifications.api.429'),
-            500 => __('notifications.api.500'),
-            501 => __('notifications.api.501'),
-            503 => __('notifications.api.503'),
+            400 => __('api.400'),
+            401 => __('api.401'),
+            403 => __('api.403'),
+            404 => __('api.404'),
+            405 => __('api.405'),
+            429 => __('api.429'),
+            500 => __('api.500'),
+            501 => __('api.501'),
+            503 => __('api.503'),
         ][$response->status()];
     }
 }
