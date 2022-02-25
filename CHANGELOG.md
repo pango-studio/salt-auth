@@ -2,6 +2,15 @@
 
 All notable changes to `auth` will be documented in this file.
 
+## v0.0.4 - 2022-02-25
+
+## What's Changed
+
+- Added Auth0 API middleware
+- Bump dependabot/fetch-metadata from 1.1.1 to 1.2.0 by @dependabot in https://github.com/pango-studio/salt-auth0/pull/1
+
+**Full Changelog**: https://github.com/pango-studio/salt-auth0/compare/0.0.3...0.0.4
+
 ## 1.0.0 - 202X-XX-XX
 
 - initial release
