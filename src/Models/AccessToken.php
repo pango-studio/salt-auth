@@ -9,7 +9,7 @@ class AccessToken extends Model
     protected $table = "access_tokens";
 
     protected $fillable = [
-        'name', 'token', 'refreshed_at'
+        'name', 'token', 'refreshed_at',
     ];
 
     public $timestamps = false;

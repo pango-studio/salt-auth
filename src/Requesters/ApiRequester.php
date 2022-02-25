@@ -3,7 +3,6 @@
 namespace Salt\Auth0\Requesters;
 
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Salt\Auth0\Exceptions\ApiException;
 use Salt\Auth0\Models\AccessToken;
@@ -39,9 +38,9 @@ class ApiRequester implements RequesterInterface
     {
         $accessToken = AccessToken::where('name', 'auth0')->first();
 
-        if (!$accessToken) {
+        if (! $accessToken) {
             $accessToken = $this->refreshAccessToken();
-        } else if ($accessToken->refreshed_at <= Carbon::now()->subDay()) {
+        } elseif ($accessToken->refreshed_at <= Carbon::now()->subDay()) {
             $accessToken = $this->refreshAccessToken($accessToken);
         }
 
@@ -81,11 +80,11 @@ class ApiRequester implements RequesterInterface
 
         $response = json_decode($response);
 
-        if (!$token) {
+        if (! $token) {
             $token = AccessToken::create([
                 'name' => 'auth0',
                 'token' => $response->access_token,
-                'refreshed_at' => now()
+                'refreshed_at' => now(),
             ]);
         }
 
