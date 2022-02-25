@@ -2,10 +2,10 @@
 
 namespace Salt\Auth0\Http\Middleware;
 
-use Auth0\SDK\Helpers\JWKFetcher;
-use Auth0\SDK\Helpers\Tokens\TokenVerifier;
 use Auth0\SDK\Exception\InvalidTokenException;
+use Auth0\SDK\Helpers\JWKFetcher;
 use Auth0\SDK\Helpers\Tokens\AsymmetricVerifier;
+use Auth0\SDK\Helpers\Tokens\TokenVerifier;
 
 use Closure;
 
@@ -17,7 +17,7 @@ class Auth0ApiMiddleware
     public function handle($request, Closure $next)
     {
         $token = $request->bearerToken();
-        if (!$token) {
+        if (! $token) {
             return response()->json(__('middleware.noToken'), 401);
         }
 
