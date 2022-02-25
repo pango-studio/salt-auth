@@ -18,7 +18,7 @@ class SaltAuth0ServiceProvider extends PackageServiceProvider
             ->name('auth0')
             ->hasConfigFile("salt-auth0")
             ->hasViews()
-            ->hasMigration('create_users_table')
+            ->hasMigrations(['create_users_table', 'create_access_tokens_table'])
             ->hasTranslations();
     }
 }
