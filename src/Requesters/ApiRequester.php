@@ -3,10 +3,10 @@
 namespace Salt\Auth0\Requesters;
 
 use Carbon\Carbon;
-use Salt\Auth0\Models\AccessToken;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Http;
 use Salt\Auth0\Exceptions\ApiException;
+use Salt\Auth0\Models\AccessToken;
 
 class ApiRequester implements RequesterInterface
 {
@@ -39,7 +39,7 @@ class ApiRequester implements RequesterInterface
     {
         $accessToken = AccessToken::where('name', 'auth0')->first();
 
-        if (!$accessToken || $accessToken->refreshed_at <= Carbon::now()->subDay()) {
+        if (! $accessToken || $accessToken->refreshed_at <= Carbon::now()->subDay()) {
             return $this->refreshAccessToken();
         } else {
             return $accessToken->token;
