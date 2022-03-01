@@ -2,6 +2,14 @@
 
 All notable changes to `auth` will be documented in this file.
 
+## v0.0.5 - 2022-03-01
+
+## What's Changed
+
+- Tweak API access token logic so it only fires once per day rather than with every request
+
+**Full Changelog**: https://github.com/pango-studio/salt-auth0/compare/0.0.4...0.0.5
+
 ## v0.0.4 - 2022-02-25
 
 ## What's Changed
