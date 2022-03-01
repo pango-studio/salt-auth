@@ -61,6 +61,22 @@ php artisan vendor:publish --tag="auth0-views"
 composer test
 ```
 
+## Releasing a new version
+
+To release a new version, first create a tag on the `main` branch with the new version number. E.g "1.0.1":
+
+```
+git tag -a 1.0.1 -m "Release version 1.0.1"
+```
+
+Then push that tag up to GitHub:
+
+```
+git push origin 1.0.1
+```
+
+A new version will automatically be created on packagist which will then be available for installation.
+
 ## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
