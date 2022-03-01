@@ -33,6 +33,9 @@ class TestCase extends Orchestra
         config()->set('salt-auth0.api.audience', "https://alt-testing.eu.auth0.com/api/v2/");
         config()->set('salt-auth0.api.domain', 'alt-testing-eu-auth0.com');
 
+        $accessTokenTable = include  __DIR__ . '/../database/migrations/create_access_tokens_table.php.stub';
+        $accessTokenTable->up();
+
         $usersTable = include  __DIR__ . '/../database/migrations/create_users_table.php.stub';
         $usersTable->up();
     }
