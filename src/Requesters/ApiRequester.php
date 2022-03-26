@@ -39,7 +39,7 @@ class ApiRequester implements RequesterInterface
     {
         $accessToken = AccessToken::where('name', 'auth0')->first();
 
-        if (! $accessToken || $accessToken->refreshed_at <= Carbon::now()->subDay()) {
+        if (!$accessToken || $accessToken->refreshed_at <= Carbon::now()->subDay()) {
             return $this->refreshAccessToken();
         } else {
             return $accessToken->token;
@@ -84,11 +84,15 @@ class ApiRequester implements RequesterInterface
 
         $response = json_decode($response);
 
-        return AccessToken::create([
-            'name' => 'auth0',
-            'token' => $response->access_token,
-            'refreshed_at' => now(),
-        ])->token;
+        return AccessToken::updateOrCreate(
+            [
+                'name' => 'auth0',
+            ],
+            [
+                'token' => $response->access_token,
+                'refreshed_at' => now(),
+            ]
+        )->token;
     }
 
     public function getErrorMessage(\Illuminate\Http\Client\Response $response): string
