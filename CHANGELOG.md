@@ -2,6 +2,14 @@
 
 All notable changes to `auth` will be documented in this file.
 
+## v0.0.6 - 2022-03-26
+
+## What's Changed
+
+- Ensure that the auth0 token is updated when stale, rather than re-created
+
+**Full Changelog**: https://github.com/pango-studio/salt-auth0/compare/0.0.5...0.0.6
+
 ## v0.0.5 - 2022-03-01
 
 ## What's Changed
