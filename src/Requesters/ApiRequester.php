@@ -39,7 +39,7 @@ class ApiRequester implements RequesterInterface
     {
         $accessToken = AccessToken::where('name', 'auth0')->first();
 
-        if (!$accessToken || $accessToken->refreshed_at <= Carbon::now()->subDay()) {
+        if (! $accessToken || $accessToken->refreshed_at <= Carbon::now()->subDay()) {
             return $this->refreshAccessToken();
         } else {
             return $accessToken->token;
@@ -106,7 +106,7 @@ class ApiRequester implements RequesterInterface
             429 => 'Too many attempts',
             500 => 'Internal server error',
             501 => 'Unsupported response or grant type',
-            503 => 'The server is temporarily unavailable'
+            503 => 'The server is temporarily unavailable',
         ][$response->status()];
     }
 }
