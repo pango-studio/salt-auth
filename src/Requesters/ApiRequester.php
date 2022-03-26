@@ -39,7 +39,7 @@ class ApiRequester implements RequesterInterface
     {
         $accessToken = AccessToken::where('name', 'auth0')->first();
 
-        if (! $accessToken || $accessToken->refreshed_at <= Carbon::now()->subDay()) {
+        if (!$accessToken || $accessToken->refreshed_at <= Carbon::now()->subDay()) {
             return $this->refreshAccessToken();
         } else {
             return $accessToken->token;
@@ -98,15 +98,15 @@ class ApiRequester implements RequesterInterface
     public function getErrorMessage(\Illuminate\Http\Client\Response $response): string
     {
         return         [
-            400 => __('api.400'),
-            401 => __('api.401'),
-            403 => __('api.403'),
-            404 => __('api.404'),
-            405 => __('api.405'),
-            429 => __('api.429'),
-            500 => __('api.500'),
-            501 => __('api.501'),
-            503 => __('api.503'),
+            400 => 'The data sent was invalid',
+            401 => 'Request unauthorized',
+            403 => 'The request was forbidden or requires verification',
+            404 => 'The requested resource could not be found',
+            405 => 'Request method not allowed',
+            429 => 'Too many attempts',
+            500 => 'Internal server error',
+            501 => 'Unsupported response or grant type',
+            503 => 'The server is temporarily unavailable'
         ][$response->status()];
     }
 }
