@@ -2,6 +2,13 @@
 
 All notable changes to `auth` will be documented in this file.
 
+## v0.0.7 - 2022-03-26
+
+- Remove API translations for now as they weren't coming across properly in apps that didn't have translation logic set up
+- Fix `Auth0IndexController` autoloading issue
+
+**Full Changelog**: https://github.com/pango-studio/salt-auth0/compare/0.0.6...0.0.7
+
 ## v0.0.6 - 2022-03-26
 
 ## What's Changed
