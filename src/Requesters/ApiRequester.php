@@ -39,7 +39,7 @@ class ApiRequester implements RequesterInterface
     {
         $accessToken = AccessToken::where('name', 'auth0')->first();
 
-        if (!$accessToken || $accessToken->refreshed_at <= Carbon::now()->subDay()) {
+        if (! $accessToken || $accessToken->refreshed_at <= Carbon::now()->subDay()) {
             return $this->refreshAccessToken();
         } else {
             return $accessToken->token;
