@@ -1,6 +1,6 @@
 <?php
 
-namespace Salt\Auth0\Http\Controllers\Auth;
+namespace Salt\Auth0\Http\Auth;
 
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
