@@ -2,6 +2,12 @@
 
 All notable changes to `auth` will be documented in this file.
 
+## v0.0.8 - 2022-04-07
+
+- Remove translations for now
+
+**Full Changelog**: https://github.com/salthq/salt-auth0/compare/0.0.7...0.0.8
+
 ## v0.0.7 - 2022-03-26
 
 - Remove API translations for now as they weren't coming across properly in apps that didn't have translation logic set up
