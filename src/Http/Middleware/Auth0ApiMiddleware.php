@@ -17,8 +17,8 @@ class Auth0ApiMiddleware
     public function handle($request, Closure $next)
     {
         $token = $request->bearerToken();
-        if (! $token) {
-            return response()->json(__('middleware.noToken'), 401);
+        if (!$token) {
+            return response()->json("No bearer token provided", 401);
         }
 
         $this->validateToken($token);
