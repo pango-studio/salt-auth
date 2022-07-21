@@ -19,7 +19,7 @@
         "php": "^8.0",
         "auth0/login": "^6.5 || ^7.0.1",
         "guzzlehttp/guzzle": "^7.3.0",
-        "guzzlehttp/psr7": "^1.8.2",
+        "guzzlehttp/psr7": "^2.4.0",
         "spatie/laravel-package-tools": "^1.9.2"
     },
     "require-dev": {
