@@ -10,6 +10,16 @@ use Salt\Auth0\Requesters\Auth0ApiRequester;
 class CustomUserRepository implements \Auth0\Laravel\Contract\Auth\User\Repository
 {
     /**
+     * Updates or creates a user from stateful session data
+     * provided by authentication with auth0.
+     *
+     * The user returned in this function must implement the interface
+     * Auth0\Laravel\Contract\Model\Stateful\User
+     *
+     * @param $data The user data provided by auth0
+     *
+     * @return $user The stateful user
+     *
      * @inheritdoc
      */
     public function fromSession(
@@ -52,13 +62,12 @@ class CustomUserRepository implements \Auth0\Laravel\Contract\Auth\User\Reposito
 
     /**
      * @inheritdoc
+     * This method is not in use.
      *
-     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
      */
     public function fromAccessToken(
         array $user
     ): ?\Illuminate\Contracts\Auth\Authenticatable {
-        // Unused in this quickstart example.
         return null;
     }
 }
