@@ -6,8 +6,9 @@ namespace Salt\Auth0\Repositories;
 
 use Salt\Auth0\Models\User;
 use Salt\Auth0\Requesters\Auth0ApiRequester;
+use Auth0\Laravel\Contract\Auth\User\Repository;
 
-class CustomUserRepository implements \Auth0\Laravel\Contract\Auth\User\Repository
+class CustomUserRepository implements Repository
 {
     /**
      * Updates or creates a user from stateful session data
