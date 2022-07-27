@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Salt\Auth0\Repositories;
 
+use Auth0\Laravel\Contract\Auth\User\Repository;
 use Salt\Auth0\Models\User;
 use Salt\Auth0\Requesters\Auth0ApiRequester;
-use Auth0\Laravel\Contract\Auth\User\Repository;
 
 class CustomUserRepository implements Repository
 {
