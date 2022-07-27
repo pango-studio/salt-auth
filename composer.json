@@ -17,7 +17,7 @@
     ],
     "require": {
         "php": "^8.0",
-        "auth0/login": "^7",
+        "auth0/login": "^7.0.1",
         "guzzlehttp/guzzle": "^7.3.0",
         "guzzlehttp/psr7": "^2.4",
         "spatie/laravel-package-tools": "^1.9.2"
