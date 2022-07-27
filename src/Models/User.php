@@ -2,10 +2,10 @@
 
 namespace Salt\Auth0\Models;
 
+use Auth0\Laravel\Contract\Model\Stateful\User as StatefulUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Salt\Auth0\Database\Factories\UserFactory;
-use Auth0\Laravel\Contract\Model\Stateful\User as StatefulUser;
 
 /**
  * Salt\Auth0\Models\User

@@ -15,7 +15,6 @@ class CustomUserRepository implements \Auth0\Laravel\Contract\Auth\User\Reposito
     public function fromSession(
         array $data
     ): ?\Illuminate\Contracts\Auth\Authenticatable {
-
         $user = User::updateOrCreate(
             [
                 'email' => $data['email'],
