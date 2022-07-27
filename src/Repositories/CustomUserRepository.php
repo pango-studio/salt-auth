@@ -1,49 +1,27 @@
 <?php
 
-namespace Salt\Auth0\Repositories;
+declare(strict_types=1);
 
-use Auth0\Login\Auth0JWTUser;
-use Auth0\Login\Auth0User;
-use Auth0\Login\Repository\Auth0UserRepository;
+namespace Salt\Auth0\Repositories;
 
 use Salt\Auth0\Models\User;
 use Salt\Auth0\Requesters\Auth0ApiRequester;
 
-class CustomUserRepository extends Auth0UserRepository
+class CustomUserRepository implements \Auth0\Laravel\Contract\Auth\User\Repository
 {
     /**
-     * Get an existing user or create a new one
-     *
-     * @param array $profile - Auth0 profile
-     *
-     * @return User
+     * @inheritdoc
      */
-    protected function upsertUser($profile)
-    {
-        $user = User::firstOrCreate(['email' => $profile['email']], [
-            'sub' => $profile['sub'] ?? '',
-            'name' => $profile['name'] ?? '',
-        ]);
+    public function fromSession(
+        array $data
+    ): ?\Illuminate\Contracts\Auth\Authenticatable {
 
-        return $user;
-    }
-
-    /**
-     * Custom method to create or update a user on sign up and store them locally
-     *
-     * @param array $data - user sign up data
-     *
-     * @return User
-     */
-    public function updateOrCreate($data): object
-    {
-        // Update or create user
         $user = User::updateOrCreate(
             [
                 'email' => $data['email'],
             ],
             [
-                'name' => $data['first_name'] . " " . $data['last_name'],
+                'name' => $data['name'],
             ]
         );
 
@@ -74,44 +52,14 @@ class CustomUserRepository extends Auth0UserRepository
     }
 
     /**
-     * Authenticate a user with a decoded ID Token
+     * @inheritdoc
      *
-     * @param array $decodedJwt
-     *
-     * @return Auth0JWTUser
+     * @phpcsSuppress SlevomatCodingStandard.Functions.UnusedParameter
      */
-    public function getUserByDecodedJWT(array $decodedJwt): Auth0JWTUser
-    {
-        $user = $this->upsertUser((array) $decodedJwt);
-
-        return new Auth0JWTUser($user->getAttributes());
-    }
-
-    /**
-     * Authenticate a user with a decoded ID Token
-     *
-     * @param object $jwt
-     *
-     * @return int user ID
-     */
-    public function getUserIDByDecodedJWT($jwt): int
-    {
-        $user = $this->upsertUser((array) $jwt);
-
-        return $user->id;
-    }
-
-    /**
-     * Get a User from the database using Auth0 profile information
-     *
-     * @param array $userinfo
-     *
-     * @return Auth0User
-     */
-    public function getUserByUserInfo(array $userinfo): Auth0User
-    {
-        $user = $this->upsertUser($userinfo['profile']);
-
-        return new Auth0User($user->getAttributes(), $userinfo['accessToken']);
+    public function fromAccessToken(
+        array $user
+    ): ?\Illuminate\Contracts\Auth\Authenticatable {
+        // Unused in this quickstart example.
+        return null;
     }
 }
