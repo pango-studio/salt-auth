@@ -31,7 +31,7 @@ class CustomUserRepository implements Repository
         $user = $this->upsertUser($data);
 
         // This will only be true for a new signup
-        if ( $user->wasRecentlyCreated ) {
+        if ($user->wasRecentlyCreated) {
 
             // Search for an existing user on Auth0
             $user_data = (new Auth0ApiRequester())->searchAuth0UserByEmail($user->email);
