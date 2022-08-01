@@ -2,6 +2,10 @@
 
 All notable changes to `auth` will be documented in this file.
 
+## Upcoming for release 0.0.9
+
+- Updates to auth0/login 7.x for compatibility with Laravel 9.x. 
+
 ## v0.0.8 - 2022-04-07
 
 - Remove translations for now
